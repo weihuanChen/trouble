@@ -1,5 +1,9 @@
 import { defaultComponentStyle } from "src/utils/const";
 import leftSideStyles from "./leftSideR.module.less";
+import { memo } from "react";
+import useEditStore from "src/store/editStore";
+import { isTextComponent } from ".";
+import { ICmp } from "src/store/editStoreTypes";
 const defaultStyle = {
   ...defaultComponentStyle,
   width: 170,
@@ -28,12 +32,25 @@ const settings = [
     style: defaultStyle,
   },
 ];
-export default function TextSide() {
+const TextSide = memo(() => {
+  //控制store的行为，使textSide不必每次都重新render
+  const { addCmp } = useEditStore(
+    (state) => state,
+    () => {
+      return true;
+    }
+  );
   return (
     <div className={leftSideStyles.main}>
       <ul className={leftSideStyles.box}>
         {settings.map((item) => (
-          <li key={item.value} className={leftSideStyles.item}>
+          <li
+            key={item.value}
+            className={leftSideStyles.item}
+            onClick={() => {
+              addCmp({ type: isTextComponent,...item } as unknown as ICmp);
+            }}
+          >
             {item.value.indexOf("双击编辑") > -1
               ? item.value.slice(4)
               : item.value}
@@ -42,4 +59,5 @@ export default function TextSide() {
       </ul>
     </div>
   );
-}
+});
+export default TextSide;
