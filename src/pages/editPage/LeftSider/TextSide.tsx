@@ -1,5 +1,5 @@
 import { defaultComponentStyle } from "src/utils/const";
-import leftSideStyles from "./leftSide.module.less";
+import leftSideStyles from "./leftSideR.module.less";
 const defaultStyle = {
   ...defaultComponentStyle,
   width: 170,

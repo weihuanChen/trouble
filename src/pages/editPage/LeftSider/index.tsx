@@ -54,7 +54,7 @@ const LeftSider = memo(() => {
           onClick={() => _setShowSide(isImgComponent)}
         >
           <i className={classNames("iconfont icon-tupian", styles.cmpIcon)}></i>
-          <span className={styles.cmpText}>文本</span>
+          <span className={styles.cmpText}>图片</span>
         </li>
         <li
           className={classNames(
@@ -66,7 +66,7 @@ const LeftSider = memo(() => {
           <i
             className={classNames("iconfont icon-graphical", styles.cmpIcon)}
           ></i>
-          <span className={styles.cmpText}>文本</span>
+          <span className={styles.cmpText}>图形</span>
         </li>
       </ul>
       {showSide === isTextComponent && <TextSide />}
