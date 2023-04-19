@@ -7,7 +7,7 @@ const useEditStore = create(
   immer<EditStoreState & EditStoreAction>((set: any) => ({
     canvas: getDefaultCanvas(),
     addCmp: (_cmp:ICmp) => {
-      set((draft:any) => {
+      set((draft) => {
         draft.canvas.cmps.push({ ..._cmp, key: getOnlyKey() });
       });
     },

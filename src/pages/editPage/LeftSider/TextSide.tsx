@@ -40,16 +40,24 @@ const TextSide = memo(() => {
       return true;
     }
   );
+  const onDragStart = (e: any, _cmp: any) => {
+    e.dataTransfer.setData("drag-cmp", JSON.stringify(_cmp));
+  };
+  console.log("TextSide render");
   return (
     <div className={leftSideStyles.main}>
       <ul className={leftSideStyles.box}>
         {settings.map((item) => (
           <li
+            draggable="true"
             key={item.value}
             className={leftSideStyles.item}
             onClick={() => {
-              addCmp({ type: isTextComponent,...item } as unknown as ICmp);
+              addCmp({ type: isTextComponent, ...item } as unknown as ICmp);
             }}
+            onDragStart={(e) =>
+              onDragStart(e, { ...item, type: isTextComponent })
+            }
           >
             {item.value.indexOf("双击编辑") > -1
               ? item.value.slice(4)

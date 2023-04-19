@@ -1,5 +1,5 @@
 import React from "react";
-export type Style = React.CSSProperties;
+export type Style = any;
 export interface ICanvas {
   title: string;
   style: Style;
