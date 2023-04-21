@@ -1,8 +1,17 @@
+import { useState } from "react";
+import styles from "./index.module.less";
 export default function RightSider() {
-    return (
-      <div>
-        <h3>RightSider</h3>
+  const [showEdit, setShowEdit] = useState(false);
+  return (
+    <div className={styles.main}>
+      <div
+        className={styles.switch}
+        onClick={() => {
+          setShowEdit(!showEdit);
+        }}
+      >
+        {showEdit ? "隐藏编辑区域" : " 显示隐藏区域"}
       </div>
-    );
-  }
-  
+    </div>
+  );
+}

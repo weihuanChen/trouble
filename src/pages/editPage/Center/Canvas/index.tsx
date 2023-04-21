@@ -1,9 +1,9 @@
 import Cmp from "./Cmp";
 import styles from "./index.module.less";
 import useEditStore from "src/store/editStore";
-
+import { addCmp } from "src/store/editStore";
 export default function Canvas() {
-  const { canvas, addCmp } = useEditStore();
+  const { canvas } = useEditStore();
   const { cmps, style } = canvas;
   const onDrop = (e: any) => {
     //1读取背拖拽的组件信息

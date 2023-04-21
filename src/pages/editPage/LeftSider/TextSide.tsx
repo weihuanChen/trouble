@@ -4,6 +4,7 @@ import { memo } from "react";
 import useEditStore from "src/store/editStore";
 import { isTextComponent } from ".";
 import { ICmp } from "src/store/editStoreTypes";
+import { addCmp } from "src/store/editStore";
 const defaultStyle = {
   ...defaultComponentStyle,
   width: 170,
@@ -33,13 +34,14 @@ const settings = [
   },
 ];
 const TextSide = memo(() => {
-  //控制store的行为，使textSide不必每次都重新render
-  const { addCmp } = useEditStore(
-    (state) => state,
-    () => {
-      return true;
-    }
-  );
+  //控制store的行为，使textSide不必每次都重新render 2023-04-18
+  //避免过度使用hooks，将addCmp抽出 2023-04-20
+  // const { addCmp } = useEditStore(
+  //   (state) => state,
+  //   () => {
+  //     return true;
+  //   }
+  // );
   const onDragStart = (e: any, _cmp: any) => {
     e.dataTransfer.setData("drag-cmp", JSON.stringify(_cmp));
   };
@@ -52,9 +54,9 @@ const TextSide = memo(() => {
             draggable="true"
             key={item.value}
             className={leftSideStyles.item}
-            onClick={() => {
-              addCmp({ type: isTextComponent, ...item } as unknown as ICmp);
-            }}
+            onClick={() =>
+              addCmp({ type: isTextComponent, ...item } as unknown as ICmp)
+            }
             onDragStart={(e) =>
               onDragStart(e, { ...item, type: isTextComponent })
             }

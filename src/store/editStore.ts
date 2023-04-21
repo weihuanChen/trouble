@@ -1,19 +1,24 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { EditStoreAction, EditStoreState, ICanvas, ICmp } from "./editStoreTypes";
+import {
+  EditStoreAction,
+  EditStoreState,
+  ICanvas,
+  ICmp,
+} from "./editStoreTypes";
 import { getOnlyKey } from "src/utils";
 
 const useEditStore = create(
   immer<EditStoreState & EditStoreAction>((set: any) => ({
-    canvas: getDefaultCanvas(),
-    addCmp: (_cmp:ICmp) => {
-      set((draft) => {
-        draft.canvas.cmps.push({ ..._cmp, key: getOnlyKey() });
-      });
-    },
+    canvas: getDefaultCanvas()
   }))
 );
-export default useEditStore
+export const addCmp = (_cmp: ICmp) => {
+  useEditStore.setState((draft) => {
+    draft.canvas.cmps.push({ ..._cmp, key: getOnlyKey() });
+  });
+};
+export default useEditStore;
 function getDefaultCanvas(): ICanvas {
   return {
     title: "未命名",
@@ -30,4 +35,3 @@ function getDefaultCanvas(): ICanvas {
     cmps: [],
   };
 }
-
