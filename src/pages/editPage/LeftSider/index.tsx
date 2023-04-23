@@ -2,6 +2,9 @@ import { memo, useEffect, useState } from "react";
 import styles from "./index.module.less";
 import classNames from "classnames";
 import TextSide from "./TextSide";
+import ImgSide from "./ImgSide";
+import GraphSide from "./GraphSide";
+import React from "react";
 
 //组件类型
 export const isTextComponent = 1;
@@ -70,6 +73,8 @@ const LeftSider = memo(() => {
         </li>
       </ul>
       {showSide === isTextComponent && <TextSide />}
+      {showSide === isImgComponent && <ImgSide />}
+      {showSide === isGraphComponent && <GraphSide />}
     </div>
   );
 });

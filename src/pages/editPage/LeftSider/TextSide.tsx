@@ -1,5 +1,5 @@
 import { defaultComponentStyle } from "src/utils/const";
-import leftSideStyles from "./leftSideR.module.less";
+import leftSideStyles from "./leftSide.module.less";
 import { memo } from "react";
 import useEditStore from "src/store/editStore";
 import { isTextComponent } from ".";
