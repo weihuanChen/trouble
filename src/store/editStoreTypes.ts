@@ -12,14 +12,15 @@ export interface ICmp {
   onClick?: string;
 }
 export interface ICmpWithKey extends ICmp {
-    key:number;
+  key: number;
 }
 export type EditStoreState = {
-    canvas:ICanvas
-}
-export type AddCmpFC = (_cmp:ICmp) => void
+  canvas: ICanvas;
+  assembly: Set<number>;
+};
+export type AddCmpFC = (_cmp: ICmp) => void;
 
 export type EditStoreAction = {
-    // addCmp:AddCmpFC;
-}
-export interface IEditStore extends EditStoreState,EditStoreAction{}
+  // addCmp:AddCmpFC;
+};
+export interface IEditStore extends EditStoreState, EditStoreAction {}

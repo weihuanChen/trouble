@@ -1,14 +1,30 @@
-import Cmp from "./Cmp";
+import { useEffect } from "react";
+import Cmp from "../Cmp";
 import styles from "./index.module.less";
-import useEditStore from "src/store/editStore";
+import useEditStore, { clearCanvas, fetchCanvas } from "src/store/editStore";
 import { addCmp } from "src/store/editStore";
+import { useCanvasId } from "src/store/hook";
+import EditBox from "../EditBox";
+import useZoomStore from "src/store/zoomStore";
 export default function Canvas() {
-  const { canvas } = useEditStore();
+  const zoom = useZoomStore((state) => state.zoom);
+  const [canvas, assembly] = useEditStore((state) => [
+    state.canvas,
+    state.assembly,
+  ]);
   const { cmps, style } = canvas;
+  const id = useCanvasId();
+  useEffect(() => {
+    if (id) {
+      fetchCanvas(id);
+    } else {
+      clearCanvas();
+    }
+  }, []);
   const onDrop = (e: any) => {
     //1读取背拖拽的组件信息
     let dragCmp = e.dataTransfer.getData("drag-cmp");
-    
+
     if (!dragCmp) {
       return;
     }
@@ -38,12 +54,18 @@ export default function Canvas() {
     <div
       id="canvas"
       className={styles.main}
-      style={canvas.style}
+      style={{ ...canvas.style, transform: `scale(${zoom / 100})` }}
       onDrop={onDrop}
       onDragOver={allowDraop}
     >
+      <EditBox />
       {cmps.map((item, index) => (
-        <Cmp key={item.key} cmp={item} index={index}></Cmp>
+        <Cmp
+          key={item.key}
+          cmp={item}
+          index={index}
+          isSelected={assembly.has(index)}
+        ></Cmp>
       ))}
     </div>
   );
