@@ -8,6 +8,7 @@ import useZoomStore from "src/store/zoomStore";
 export default function Center() {
   const canvas = useEditStore((state) => state.canvas);
   const {zoom, zoomIn, zoomOut} = useZoomStore();
+  //监听按钮输入
   const keyEvent = (e) => {
     if (
       (e.target as Element).nodeName === "INPUT" ||

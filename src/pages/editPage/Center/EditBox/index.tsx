@@ -1,15 +1,23 @@
 import useEditStore, {
   updateAssemblyCmpsByDistance,
+  updateSelectedCmpAttr,
+  updateSelectedCmpStyle,
 } from "src/store/editStore";
 import styles from "./index.module.less";
 import { throttle } from "lodash";
 import useZoomStore from "src/store/zoomStore";
 import StretchDots from "./StretchDots";
+import { useState } from "react";
+import { isTextComponent } from "../../LeftSider";
+import TextareaAutosize from "react-textarea-autosize";
 export default function EditBox() {
   const [cmps, assembly] = useEditStore((state) => [
     state.canvas.cmps,
     state.assembly,
   ]);
+  // 只有单个文本组件的时候才会用到
+  const selectedCmp = cmps[Array.from(assembly)[0]];
+  const [textareaFocused, setTextareaFocused] = useState(false);
 
   const zoom = useZoomStore((state) => state.zoom);
   //再画布上移动组件位置
@@ -77,7 +85,33 @@ export default function EditBox() {
         height,
       }}
       onMouseDown={onMouseDownOfCmp}
+      onClick={(e) => {
+        //阻止默认事件
+        e.stopPropagation();
+      }}
+      onDoubleClick={() => {
+        setTextareaFocused(true);
+      }}
     >
+      {size === 1 &&
+        selectedCmp.type === isTextComponent &&
+        textareaFocused && (
+          <TextareaAutosize
+            value={selectedCmp.value}
+            style={{
+              ...selectedCmp.style,
+              top: 2,
+              left: 2,
+            }}
+            onChange={(e) => {
+              const newValue = e.target.value;
+              updateSelectedCmpAttr("value", newValue);
+            }}
+            onHeightChange={(height) => {
+              updateSelectedCmpStyle({ height });
+            }}
+          />
+        )}
       <StretchDots zoom={zoom} style={{ width, height }} />
     </div>
   );
