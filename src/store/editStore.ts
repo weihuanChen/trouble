@@ -19,6 +19,9 @@ const useEditStore = create(
     canvas: getDefaultCanvas(),
     //记录选中组件的下标
     assembly: new Set(),
+    //历史记录
+    canvasChangeHistory: [{ canvas: getDefaultCanvas(), assembly: new Set() }],
+    canvasChangeHistoryIndex: 0,
   }))
 );
 // !移动
@@ -151,7 +154,7 @@ export const updateSelectedCmpAttr = (name: string, value: string) => {
 //修改单个组件的style
 export const updateSelectedCmpStyle = (newStyle: Style) => {
   console.log(newStyle);
-  
+
   useEditStore.setState((draft) => {
     Object.assign(
       draft.canvas.cmps[selectedCmpIndexSelector(draft)].style,

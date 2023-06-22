@@ -1,19 +1,19 @@
 import React from "react";
 import styles from "./index.module.less";
 import Canvas from "./Canvas";
-import useEditStore, { setAllCmpSelected, setCmpSelected } from "src/store/editStore";
+import useEditStore, {
+  setAllCmpSelected,
+  setCmpSelected,
+} from "src/store/editStore";
 import Zoom from "./Zoom";
 import useZoomStore from "src/store/zoomStore";
 
 export default function Center() {
   const canvas = useEditStore((state) => state.canvas);
-  const {zoom, zoomIn, zoomOut} = useZoomStore();
+  const { zoom, zoomIn, zoomOut } = useZoomStore();
   //监听按钮输入
-  const keyEvent = (e) => {
-    if (
-      (e.target as Element).nodeName === "INPUT" ||
-      (e.target as Element).nodeName === "TEXTAREA"
-    ) {
+  const keyEvent = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if ((e.target as Element).nodeName === "TEXTAREA") {
       return;
     }
 
@@ -55,4 +55,3 @@ export default function Center() {
     </div>
   );
 }
-
