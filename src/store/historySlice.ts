@@ -1,4 +1,4 @@
-import { useEditStore } from "src/store/editStore";
+import useEditStore from "src/store/editStore";
 import { EditStoreState } from "./editStoreTypes";
 
 //最长历史记录
